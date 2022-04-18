@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>Netflix BackOffice</title>
+</head>
+
+<body>
+    <div class="container-fluid px-5">
+        <nav class="navbar navbar-expand-lg navbar-dark px-0 pb-0">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/imgs/Netflix_Logo_RGB.png" alt="netflix logo" height="48">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./backoffice.html">BackOffice</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+
+                <i class="bi bi-search text-white pr-4"></i>
+                <span class="kids-item pr-4">KIDS</span>
+                <i class="bi bi-bell-fill text-white pr-4"></i>
+
+
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle text-white px-0" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <h3 class="text-white text-center title">Genres</h3>
+        <span id="alert-container"></span>
+        <div class="row" id="card-container">
+
+        </div>
+
+        <footer>
+            <div class="row justify-content-center mt-5">
+
+                <div class="col-10 col-lg-6 text-muted text-center text-sm-left">
+                    <i class="bi bi-facebook"></i>
+                    <i class="bi bi-instagram"></i>
+                    <i class="bi bi-twitter"></i>
+                    <i class="bi bi-youtube"></i>
+
+                    <small>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-3">
+                                <ul class="list-unstyled">
+                                    <li>Audio and Subtitles</li>
+                                    <li>Media Center</li>
+                                    <li>Privacy</li>
+                                    <li>Contact Us</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <ul class="list-unstyled">
+                                    <li>Audio Description</li>
+                                    <li>Investor Relations</li>
+                                    <li>Legal Notices</li>
+
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <ul class="list-unstyled">
+                                    <li>Help Center</li>
+                                    <li>Jobs</li>
+                                    <li>Cookie Preferences</li>
+
+                                </ul>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <ul class="list-unstyled">
+                                    <li>Gift Cards</li>
+                                    <li>Terms of Use</li>
+                                    <li>Corporate Information</li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </small>
+
+                    <button class="btn btn-sm btn-outline-secondary rounded-0 mt-3">Service Code</button>
+
+                    <p class="mt-2">
+                        <small>
+                            &copy; singingcodes
+                        </small>
+                    </p>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const url = "https://striveschool-api.herokuapp.com/api/movies/"
+        window.onload = async () => {
+            try {
+                let searchParams = new URLSearchParams(window.location.search)
+                let movieId = searchParams.get("movieId")
+                console.log(movieId)
+                const response = await fetch(url + movieId, {
+                    method: "GET",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxY2E5MDIzOTAwMTVkOTY1YzciLCJpYXQiOjE2NTAyMjgxOTEsImV4cCI6MTY1MTQzNzc5MX0.7kfsRfWSfVlffKfi616rtQhRdS8oUqq13eW68vuYKRU"
+                    },
+                })
+
+                const genres = await response.json()
+                console.log(genres)
+                // genres.forEach(genre => {
+                //     let title = document.querySelector(".title")
+                //     title.innerHTML = genre.category + "-Movies"
+                //     let cardContainer = document.getElementById("card-container")
+                //     cardContainer.innerHTML += `
+                //     <div class="col-md-4">
+                //         <div class="card mb-3">
+                //         <img src="${genre.imageUrl}" class="card-img-top" alt="${genre.name}" width="100px" height="200px">
+                //         <div class="card-body">
+                //             <h5 class="card-title">${genre.name}</h5>
+                //             <p class="card-text">${genre.description}</p>
+                //             <a href="./details.html?movieId=${genre._id}" class="btn save-btn">View Details</a>
+                //         </div>
+                //         </div>
+                //         </div>`
+
+                // });
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+    </script>
+</body>
+
+</html>
