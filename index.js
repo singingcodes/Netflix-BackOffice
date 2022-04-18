@@ -51,17 +51,51 @@ const url =id? "https://striveschool-api.herokuapp.com/api/movies/" + id : "http
 window.onload = async() => {
     if(id){
         const response = await fetch(url, {
-           
+            method:"PUT", 
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxY2E5MDIzOTAwMTVkOTY1YzciLCJpYXQiOjE2NTAyMjgxOTEsImV4cCI6MTY1MTQzNzc5MX0.7kfsRfWSfVlffKfi616rtQhRdS8oUqq13eW68vuYKRU"
                 }
             })
-         const {name, description, category, imageUrl} = await response.json()
+         const movies = await response.json()
          console.log(response)
-        document.getElementById("name").value = name
-        document.getElementById("description").value = description
-        document.getElementById("category").value = category
-        document.getElementById("imageUrl").value = imageUrl
+        document.getElementById("name").value = movies.name
+        document.getElementById("description").value = movies.description
+        document.getElementById("category").value = movies.category
+        document.getElementById("imageUrl").value = movies.imageUrl
+    }
+}
+
+const handleSubmit =async (event) => {
+    try {
+        event.preventDefault()
+        let myMovies = {
+            name: document.getElementById("name").value,
+            description: document.getElementById("description").value,
+            category: document.getElementById("category").value,
+            imageUrl: document.getElementById("imageUrl").value
+        }
+        event.preventDefault()
+        const response = await fetch(url, {
+            method:"PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxY2E5MDIzOTAwMTVkOTY1YzciLCJpYXQiOjE2NTAyMjgxOTEsImV4cCI6MTY1MTQzNzc5MX0.7kfsRfWSfVlffKfi616rtQhRdS8oUqq13eW68vuYKRU"
+                },
+            body: JSON.stringify(myMovies)
+        })
+        if(response.ok){
+            const movies = await response.json()
+            console.log(movies)
+            if (id) {
+                popAlert("success", "movie with " + movies._id + " got edited successfully" )
+                window.location.assign("./movies.html")
+            } else {
+                popAlert( "success", "Movie created successfully")
+            }
+        }
+        
+    } catch (error) {
+        console.log(error)
     }
 }

@@ -28,19 +28,19 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="./backoffice.html">BackOffice</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle" href="./movies.html" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                            Genres
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="./movies.html">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
@@ -97,7 +97,7 @@
                             <input type="date" class="form-control" id="date" aria-describedby="date">
                         </div>
                         <button type="submit" class="btn movie-btn">Add Movie</button>
-                        <button type="button" class="btn save-btn">Save</button>
+                        <button type="button" class="btn save-btn" onclick="handleSubmit(event)">Save</button>
                     </form>
                 </div>
             </div>

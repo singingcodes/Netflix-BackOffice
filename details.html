@@ -72,8 +72,8 @@
 
 
         <h3 class="text-white text-center title">Genres</h3>
-        <span id="alert-container"></span>
-        <div class="row" id="card-container">
+        <span id="alert-cont justify-content-center"></span>
+        <div class="row justify-content-center" id="card-container">
 
         </div>
 
@@ -146,42 +146,78 @@
 
     <script>
         const url = "https://striveschool-api.herokuapp.com/api/movies/"
+        let searchParams = new URLSearchParams(window.location.search)
+        let movieId = searchParams.get("movieId")
+        console.log(movieId)
         window.onload = async () => {
             try {
-                let searchParams = new URLSearchParams(window.location.search)
-                let movieId = searchParams.get("movieId")
-                console.log(movieId)
                 const response = await fetch(url + movieId, {
-                    method: "GET",
+                    method: "PUT",
                     headers: {
                         'Content-Type': 'application/json',
                         "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxY2E5MDIzOTAwMTVkOTY1YzciLCJpYXQiOjE2NTAyMjgxOTEsImV4cCI6MTY1MTQzNzc5MX0.7kfsRfWSfVlffKfi616rtQhRdS8oUqq13eW68vuYKRU"
                     },
                 })
-
-                const genres = await response.json()
-                console.log(genres)
-                // genres.forEach(genre => {
-                //     let title = document.querySelector(".title")
-                //     title.innerHTML = genre.category + "-Movies"
-                //     let cardContainer = document.getElementById("card-container")
-                //     cardContainer.innerHTML += `
-                //     <div class="col-md-4">
-                //         <div class="card mb-3">
-                //         <img src="${genre.imageUrl}" class="card-img-top" alt="${genre.name}" width="100px" height="200px">
-                //         <div class="card-body">
-                //             <h5 class="card-title">${genre.name}</h5>
-                //             <p class="card-text">${genre.description}</p>
-                //             <a href="./details.html?movieId=${genre._id}" class="btn save-btn">View Details</a>
-                //         </div>
-                //         </div>
-                //         </div>`
-
-                // });
+                if (response.ok) {
+                    const movie = await response.json()
+                    console.log(movie)
+                    let title = document.querySelector(".title")
+                    title.innerHTML = movie.name
+                    let cardContainer = document.getElementById("card-container")
+                    cardContainer.innerHTML += `
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                        <img src="${movie.imageUrl}" class="card-img-top" alt="${movie.name}" width="100px" height="200px">
+                        <div class="card-body">
+                            <h5 class="card-title">${movie.name}</h5>
+                            <p class="card-text">${movie.description}</p>
+                            <a href="#" class="btn btn-danger" onclick="deleteMovie()">Delete Movie</a>
+                        </div>
+                        </div>
+                         </div>`
+                }
             } catch (error) {
                 console.log(error)
             }
 
+        }
+        const popAlert = (type, msg) => {
+
+            const alertContainer = document.getElementById("alert-cont")
+
+            alertContainer.innerHTML = `
+            <div class="alert alert-${type}" role="alert">
+            ${msg}
+            </div>
+            `
+
+            setTimeout(() => {
+                alertContainer.innerHTML = ""
+            }, 3000)
+        }
+        const deleteMovie = async () => {
+            const id = new URLSearchParams(window.location.search).get("movieId")
+            console.log(id)
+            const confirmed = confirm("Are you sure you want to delete this Movie?")
+            if (confirmed) {
+                try {
+                    const response = await fetch(url + id, {
+                        method: "DELETE",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjU2YmQxY2E5MDIzOTAwMTVkOTY1YzciLCJpYXQiOjE2NTAyMjgxOTEsImV4cCI6MTY1MTQzNzc5MX0.7kfsRfWSfVlffKfi616rtQhRdS8oUqq13eW68vuYKRU"
+                        }
+                    })
+                    if (response.ok) {
+                        popAlert("success", "Movie deleted successfully")
+                        setTimeout(() => { window.location.assign("/") }, 2000)
+                    } else {
+                        popAlert("danger", "Something went wrong in the deletion process")
+                    }
+                } catch (err) {
+                    popAlert("danger", err.message)
+                }
+            }
         }
     </script>
 </body>
